@@ -10,6 +10,8 @@ import Foundation
 
 class BattleShipBrain {
     
+    
+    //this will allow me to set up the orientation randomly later in my code
     func vertOrHor() -> State {
         let randomNum = Int(arc4random_uniform(2))
         if randomNum == 0 {
@@ -19,11 +21,14 @@ class BattleShipBrain {
         }
     }
     
+    
+    //this stores the value of the orientation for use in my code
     enum State {
         case verticle
         case horizontal
     }
     
+    //this allows me to store the length of the different ships in the game. it annoys me to no end that cruiser and sub arent different. oh well.
     enum Ship: Int {
         case destroyer = 2
         case cruiserOrSubmarineWeNeedBetterRadarToConfirm = 3
@@ -32,10 +37,14 @@ class BattleShipBrain {
         case openWater = 0
     }
     
+    //this allows me to set a value to each column in the code
     private let alphabet = ["A","B","C","D","E","F","G","H","I","J"]
     
+    //this is the board which i will fill later on
     var board = [(Int, String, Ship)]()
     
+    
+    //this looks through the board and checks to see if there is space for your ship to sit, the following two do the same thing, but for vertical.
     private func checkBoardHorizontally(range: CountableRange<Int>) -> Bool {
         for i in range {
             if board[i].2 != .openWater {
@@ -63,6 +72,8 @@ class BattleShipBrain {
         return true
     }
     
+    //this allows you to apply all your functions to make sure you can set your shit nicely
+    
     private func setShip(ship: Ship, a: Int, y: State) {
         let z = ship.rawValue
         
@@ -73,6 +84,8 @@ class BattleShipBrain {
             setVerticle(z: z, ship: ship)
         }
     }
+    
+    //this sets horizontally. the ranges are based on moving forward when i can and backwards when i cant. the reason for the while loop is that i dont know how many times i will be checking through my board to find the right spot based on random numbers. the following is the same basic principle, but you do not need to check a range you are checking multiples of 10. there is probably a way to go about this utilizing the numbers and letters i assigned earlier but i am very tired of this homework :/.
     
     func setHorizontal( z: Int, ship: Ship) {
         var repeatThisCheck = true
@@ -113,6 +126,8 @@ class BattleShipBrain {
         
     }
     
+    //this creates a board and then fills it with your ships randomly.
+    
     private func setUpGame() {
         
         for x in 0...9 {
@@ -126,6 +141,8 @@ class BattleShipBrain {
         setShip(ship: .carrier, a: 4, y: vertOrHor())
         setShip(ship: .destroyer, a: 5, y: vertOrHor())
     }
+    
+    //this checks to see if your shot has resulted in hitting a target or not. it will let you know what target (for debugging and proof) or if you missed the target entirely.
     
     func checkYourShot (boardPosition: Int) -> (String, Bool) {
         switch board[boardPosition].2 {
@@ -142,6 +159,7 @@ class BattleShipBrain {
         }
     }
 
+    //have to init the game!
     init() {
         setUpGame()
     }

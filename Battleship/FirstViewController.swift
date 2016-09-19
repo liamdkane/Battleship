@@ -9,6 +9,8 @@
 import UIKit
 
 class FirstViewController: UIViewController {
+    
+    //init the set up of the board, set up references to the view.
 
     let brain = BattleShipBrain()
     
@@ -21,6 +23,8 @@ class FirstViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    //sets up button
+    
     func setUpGameButtons(v: UIView) {
         for i in 0...99 {
             let y = ((i) / 10)
@@ -36,6 +40,8 @@ class FirstViewController: UIViewController {
             v.addSubview(button)
         }
     }
+    
+    //what happens when the button is pressed
     func buttonTapped (button: UIButton) {
         let result = brain.checkYourShot(boardPosition: button.tag)
         gameLabel.text = result.0
