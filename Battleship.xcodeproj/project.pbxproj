@@ -13,6 +13,7 @@
 		1ED8D7731D8CA082007FD4C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED8D7711D8CA082007FD4C7 /* Main.storyboard */; };
 		1ED8D7751D8CA082007FD4C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ED8D7741D8CA082007FD4C7 /* Assets.xcassets */; };
 		1ED8D7781D8CA082007FD4C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ED8D7761D8CA082007FD4C7 /* LaunchScreen.storyboard */; };
+		817BABC61D8DC68700F03396 /* BattleShipBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817BABC51D8DC68700F03396 /* BattleShipBrain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1ED8D7741D8CA082007FD4C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1ED8D7771D8CA082007FD4C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1ED8D7791D8CA082007FD4C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		817BABC51D8DC68700F03396 /* BattleShipBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleShipBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				1ED8D76B1D8CA082007FD4C7 /* AppDelegate.swift */,
 				1ED8D76D1D8CA082007FD4C7 /* FirstViewController.swift */,
 				1ED8D76F1D8CA082007FD4C7 /* SecondViewController.swift */,
+				817BABC51D8DC68700F03396 /* BattleShipBrain.swift */,
 				1ED8D7711D8CA082007FD4C7 /* Main.storyboard */,
 				1ED8D7741D8CA082007FD4C7 /* Assets.xcassets */,
 				1ED8D7761D8CA082007FD4C7 /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ED8D7701D8CA082007FD4C7 /* SecondViewController.swift in Sources */,
+				817BABC61D8DC68700F03396 /* BattleShipBrain.swift in Sources */,
 				1ED8D76C1D8CA082007FD4C7 /* AppDelegate.swift in Sources */,
 				1ED8D76E1D8CA082007FD4C7 /* FirstViewController.swift in Sources */,
 			);
@@ -303,6 +307,7 @@
 				1ED8D77E1D8CA082007FD4C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
