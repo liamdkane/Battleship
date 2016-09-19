@@ -37,7 +37,7 @@ class BattleShipBrain {
         case openWater = 0
     }
     
-    //this allows me to set a value to each column in the code
+    //this allows me to set a value to each row in the code
     private let alphabet = ["A","B","C","D","E","F","G","H","I","J"]
     
     //this is the board which i will fill later on
@@ -74,7 +74,7 @@ class BattleShipBrain {
     
     //this allows you to apply all your functions to make sure you can set your shit nicely
     
-    private func setShip(ship: Ship, a: Int, y: State) {
+    private func setShip(ship: Ship, y: State) {
         let z = ship.rawValue
         
         switch y {
@@ -86,6 +86,8 @@ class BattleShipBrain {
     }
     
     //this sets horizontally. the ranges are based on moving forward when i can and backwards when i cant. the reason for the while loop is that i dont know how many times i will be checking through my board to find the right spot based on random numbers. the following is the same basic principle, but you do not need to check a range you are checking multiples of 10. there is probably a way to go about this utilizing the numbers and letters i assigned earlier but i am very tired of this homework :/.
+    
+    // z is always the length of the ship, the ship will always be the one you have called, x will be a random number
     
     func setHorizontal( z: Int, ship: Ship) {
         var repeatThisCheck = true
@@ -126,7 +128,7 @@ class BattleShipBrain {
         
     }
     
-    //this creates a board and then fills it with your ships randomly.
+    //this creates a board and then fills it with your ships randomly. the nested loop will append the number value as the column and a letter as the row.
     
     private func setUpGame() {
         
@@ -135,11 +137,11 @@ class BattleShipBrain {
                 board.append((i, alphabet[x], .openWater))
             }
         }
-        setShip(ship: .cruiserOrSubmarineWeNeedBetterRadarToConfirm, a: 1, y: vertOrHor())
-        setShip(ship: .cruiserOrSubmarineWeNeedBetterRadarToConfirm, a: 2, y: vertOrHor())
-        setShip(ship: .battleship, a: 3, y: vertOrHor())
-        setShip(ship: .carrier, a: 4, y: vertOrHor())
-        setShip(ship: .destroyer, a: 5, y: vertOrHor())
+        setShip(ship: .cruiserOrSubmarineWeNeedBetterRadarToConfirm, y: vertOrHor())
+        setShip(ship: .cruiserOrSubmarineWeNeedBetterRadarToConfirm, y: vertOrHor())
+        setShip(ship: .battleship, y: vertOrHor())
+        setShip(ship: .carrier, y: vertOrHor())
+        setShip(ship: .destroyer, y: vertOrHor())
     }
     
     //this checks to see if your shot has resulted in hitting a target or not. it will let you know what target (for debugging and proof) or if you missed the target entirely.
