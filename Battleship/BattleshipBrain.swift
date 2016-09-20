@@ -10,7 +10,17 @@
 import Foundation
 
 class BattleshipBrain {
+    
+    func computerPlayer() {
+        while !gameFinished() {
+            strike(atRow: Int(arc4random_uniform(UInt32(rows))), andColumn: Int(arc4random_uniform(UInt32(columns))))
+        }
+    }
+    
+    
+    
     enum Coordinate {
+        
         enum Ship {
             case carrier(Int)
             case battleship(Int)
@@ -18,8 +28,11 @@ class BattleshipBrain {
         enum State {
             case hidden, shown
         }
+        
         case occupied(State, Ship)
         case empty(State)
+        
+        
         
         mutating func tryToHit() -> Bool {
             switch self {
@@ -40,7 +53,7 @@ class BattleshipBrain {
     
     let rows: Int
     let columns: Int
-
+    
     private var coordinates: [[Coordinate]]
     
     init(rows: Int, columns: Int){
@@ -55,8 +68,8 @@ class BattleshipBrain {
         for r in 0..<rows {
             self.coordinates.append([Coordinate](repeating: .empty(.hidden), count: columns))
             
-            // this just sets one hit per column
-            coordinates[r][Int(arc4random_uniform(UInt32(columns)))] = Coordinate.occupied(.hidden, .carrier(5))
+            //this just sets one hit per column
+            //coordinates[r][Int(arc4random_uniform(UInt32(columns)))] = Coordinate.occupied(.hidden, .carrier(5))
         }
     }
     
@@ -71,6 +84,10 @@ class BattleshipBrain {
     
     func strike(atRow r: Int, andColumn c: Int) -> Bool {
         return coordinates[r][c].tryToHit()
+    }
+    
+    func set(atRow r: Int, andColumn c: Int) {
+        coordinates[r][c] = Coordinate.occupied(.hidden, .carrier(5))
     }
     
     func gameFinished() -> Bool {

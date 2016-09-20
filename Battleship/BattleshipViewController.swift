@@ -22,26 +22,39 @@ class BattleshipViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         // better than viewDidLayoutSubviews but not all the way there
         self.view.layoutIfNeeded()
         
         startGame()
     }
     
-    func buttonTapped(_ sender: UIButton) {
+    func setButtonTapped(_ sender: UIButton) {
         // our tag is one-based so we subtract 1 before indexing
         let r = (sender.tag - 1) / brain.columns
         let c = (sender.tag - 1) % brain.columns
         
         // note how the strike itself isn't updating the interface
-        _ = brain.strike(atRow: r, andColumn: c)
+        _ = brain.set(atRow: r, andColumn: c)
+        sender.backgroundColor = UIColor.red
         
-        // redraw the whole board
+        
+    }
+    @IBAction func finishSettingShips(_ sender: UIButton) {
+        for r in 0..<brain.rows {
+            for c in 0..<brain.columns {
+                // find the button by tag
+                // our tag is one-based so we add 1
+                if let button = gridView.viewWithTag(r * brain.columns + c + 1) as? UIButton {
+                    button.backgroundColor = UIColor.blue
+                }
+            }
+        }
         drawBoard()
-        
-        // check for win
+        brain.computerPlayer()
+        drawBoard()
         if brain.gameFinished() {
+
             messageLabel.text = "You win!"
         }
         else {
@@ -100,7 +113,7 @@ class BattleshipViewController: UIViewController {
                 
                 let letter = String(Character(UnicodeScalar(65 + row)!))
                 button.setTitle("\(letter)\(col + 1)", for: UIControlState())
-                button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+                button.addTarget(self, action: #selector(setButtonTapped), for: .touchUpInside)
                 v.addSubview(button)
             }
         }
