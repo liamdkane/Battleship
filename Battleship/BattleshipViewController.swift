@@ -12,6 +12,8 @@ class BattleshipViewController: UIViewController {
     
     @IBOutlet weak var gridView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var buttonLabel: UIButton!
+
     
     let brain: BattleshipBrain
     
@@ -25,11 +27,12 @@ class BattleshipViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         // better than viewDidLayoutSubviews but not all the way there
         self.view.layoutIfNeeded()
         startGame()
     }
+
     
     func buttonTapped(_ sender: UIButton) {
         // our tag is one-based so we subtract 1 before indexing
@@ -67,17 +70,15 @@ class BattleshipViewController: UIViewController {
                 brain.placeCoordinate(r: r, c: c, shipType: .occupied(.hidden, .destroyer))
                 if buttonTappedCounter == 17 {
                     messageLabel.text = "DESTROYER SET.\nALL SHIPS NOW SET\nCLICK A BLUE GAME SQUARE TO START."
+                    buttonLabel.isHidden = false
+                    messageLabel.text = "PLAY BATTLESHIP."
                 }
-            case 18:
-                drawBoard()
-                messageLabel.text = "PLAY BATTLESHIP."
-                gameBoardBeingSet = false
-                enableGameButtons(view: gridView)
             default:
-                break
+                messageLabel.text = "OH YA BABY KEEP PRESSING MY BUTTONS"
+                sender.backgroundColor = .blue
             }
-
-
+            
+            
         } else {
             // note how the strike itself isn't updating the interface
             _ = brain.strike(atRow: r, andColumn: c)
@@ -88,7 +89,7 @@ class BattleshipViewController: UIViewController {
                 messageLabel.text = "MISS"
             case .occupied(_, let ship):
                 messageLabel.text = "YOU HIT MY \(ship.rawValue)"
-                            }
+            }
             if case .occupied(_, let ship) = currentSquare {
                 if brain.shipSunk(ship: ship) {
                     messageLabel.text = "WITH THE FUNCTION\nYOU SUNK MY \(ship.rawValue)"
@@ -166,36 +167,23 @@ class BattleshipViewController: UIViewController {
         gameBoardBeingSet = true
         drawBoard()
         cpuPlaysTheGame()
-        
     }
     
     func cpuPlaysTheGame() {
-        outer: for r in 0..<brain.rows {
-            inner: for c in 0..<brain.columns {
-                // note how the strike itself isn't updating the interface
-                _ = brain.strike(atRow: r, andColumn: c)
-                
-                // redraw the whole board
-                drawBoard()
-                
-                // check for win
-                if brain.gameFinished() {
-                    messageLabel.text = "CPU wins!"
-                    disableGameButtons(view: gridView)
-                    break outer
-                }
-                else {
-                    messageLabel.text = "Keep guessing"
-                }
-            }
+        while !brain.gameFinished() {
+            _ = brain.strike(atRow: Int(arc4random_uniform(UInt32(brain.rows))), andColumn: Int(arc4random_uniform(UInt32(brain.columns))))
         }
+        drawBoard()
+        messageLabel.text = "The CPU found your ships."
     }
-        
+    
     func startGame() {
         brain.resetBoard()
         setUpGameButtons(v: gridView)
         messageLabel.text = "WELCOME TO BATTLESHIP.\nPLACE YOUR CARRIER\nON 5 CONSECUTIVE SQUARES."
         gameBoardBeingSet = true
+        buttonLabel.isHidden = true
+        buttonLabel.setTitle("START", for: .normal)
     }
     
     func disableGameButtons(view: UIView) {
@@ -214,9 +202,19 @@ class BattleshipViewController: UIViewController {
         }
     }
     
+    
     @IBAction func resetTapped(_ sender: UIButton) {
-        startGame()
-        buttonTappedCounter = 0
+        if gameBoardBeingSet {
+            drawBoard()
+            gameBoardBeingSet = false
+            enableGameButtons(view: gridView)
+            sender.setTitle("Reset Game", for: .normal)
+        } else {
+            messageLabel.text = "PLAY BATTLESHIP."
+            startGame()
+            buttonTappedCounter = 0
+            
+        }
     }
 }
 
